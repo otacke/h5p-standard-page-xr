@@ -1,7 +1,7 @@
-H5P Standard Page
+H5P Standard Page (XR)
 ==========
 
-Standard list page where you can add multiple library elements.
+Standard list page (XR variant) where you can add multiple library elements.
 
 ## License
 

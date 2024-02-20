@@ -4,11 +4,11 @@ var H5P = H5P || {};
  * Standard Page module
  * @external {jQuery} $ H5P.jQuery
  */
-H5P.StandardPage = (function ($, EventDispatcher) {
+H5P.StandardPageXR = (function ($, EventDispatcher) {
   "use strict";
 
   // CSS Classes:
-  var MAIN_CONTAINER = 'h5p-standard-page';
+  var MAIN_CONTAINER = 'h5p-standard-page-xr';
 
   /**
    * Initialize module.
@@ -84,7 +84,7 @@ H5P.StandardPage = (function ($, EventDispatcher) {
 
     this.params.elementList.forEach(function (element, index) {
       var $elementContainer = $('<div>', {
-        'class': 'h5p-standard-page-element'
+        'class': 'h5p-standard-page-xr-element'
       }).appendTo(self.$inner);
 
       const childExtras = {}
@@ -104,15 +104,66 @@ H5P.StandardPage = (function ($, EventDispatcher) {
         self.trigger('resize');
       });
 
-      elementInstance.on('resize', function () {
-        self.parent.trigger('resize');
-      });
+      // Bubble resize events
+      self.bubbleUp(elementInstance, 'resize', self.parent);
+
+      // Resize children to fit inside parent
+      self.bubbleDown(self.parent, 'resize', [elementInstance]);
 
       elementInstance.attach($elementContainer);
+
+      if (elementInstance?.libraryInfo.machineName === 'H5P.Audio') {
+        if (!!window.chrome) {
+          console.log(elementInstance);
+
+          elementInstance.audio.style.height = '54px';
+        }
+      }
 
       self.pageInstances.push(elementInstance);
     });
   };
+
+  /**
+   * Makes it easy to bubble events from parent to children
+   *
+   * @private
+   * @param {Object} origin Origin of the Event
+   * @param {string} eventName Name of the Event
+   * @param {Array} targets Targets to trigger event on
+   */
+  StandardPage.prototype.bubbleDown = function (origin, eventName, targets) {
+    origin.on(eventName, function (event) {
+      if (origin.bubblingUpwards) {
+        return; // Prevent send event back down.
+      }
+
+      for (var i = 0; i < targets.length; i++) {
+        targets[i].trigger(eventName, event);
+      }
+    });
+  }
+
+  /**
+   * Makes it easy to bubble events from child to parent
+   *
+   * @private
+   * @param {Object} origin Origin of the Event
+   * @param {string} eventName Name of the Event
+   * @param {Object} target Target to trigger event on
+   */
+  StandardPage.prototype.bubbleUp = function (origin, eventName, target) {
+    origin.on(eventName, function (event) {
+      // Prevent target from sending event back down
+      target.bubblingUpwards = true;
+
+      // Trigger event
+      target.trigger(eventName, event);
+
+      // Reset
+      target.bubblingUpwards = false;
+    });
+  }
 
   /**
    * Retrieves input array.
@@ -216,7 +267,7 @@ H5P.StandardPage = (function ($, EventDispatcher) {
       'en-US': self.params.title
     };
     definition.extensions = {
-      'https://h5p.org/x-api/h5p-machine-name': 'H5P.StandardPage'
+      'https://h5p.org/x-api/h5p-machine-name': 'H5P.StandardPageXR'
     };
 
     return definition;
