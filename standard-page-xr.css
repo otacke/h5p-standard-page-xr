@@ -32,3 +32,7 @@
   left: 0.25em;
   font-size: 14px;
 }
+
+.h5p-standard-page-xr .h5p-image-hotspot-question::before {
+  content: " ";
+}
