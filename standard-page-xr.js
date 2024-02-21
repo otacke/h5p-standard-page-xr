@@ -114,8 +114,6 @@ H5P.StandardPageXR = (function ($, EventDispatcher) {
 
       if (elementInstance?.libraryInfo.machineName === 'H5P.Audio') {
         if (!!window.chrome) {
-          console.log(elementInstance);
-
           elementInstance.audio.style.height = '54px';
         }
       }
