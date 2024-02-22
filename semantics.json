@@ -6,26 +6,32 @@
     "type": "list",
     "entity": "element",
     "field": {
-      "name": "element",
-      "type": "library",
-      "label": "Element type",
-      "importance": "high",
-      "description": "Library for this page.",
-      "options": [
-        "H5P.Text 1.1",
-        "H5P.TextInputField 1.2",
-        "H5P.CheckboxList 1.0",
-        "H5P.DropdownField 1.0",
-        "H5P.Accordion 1.0",
-        "H5P.Agamotto 1.6",
-        "H5P.Audio 1.5",
-        "H5P.Dialogcards 1.9",
-        "H5P.ImageMultipleHotspotQuestion 1.0",
-        "H5P.Image 1.1",
-        "H5P.ImageHotspots 1.10",
-        "H5P.ImageSlider 1.1",
-        "H5P.InteractiveVideo 1.26",
-        "H5P.Timeline 1.1"
+      "name": "elementGroup",
+      "type": "group",
+      "fields": [
+        {
+          "name": "element",
+          "type": "library",
+          "label": "Element type",
+          "importance": "high",
+          "description": "Library for this page.",
+          "options": [
+            "H5P.Text 1.1",
+            "H5P.TextInputField 1.2",
+            "H5P.CheckboxList 1.0",
+            "H5P.DropdownField 1.0",
+            "H5P.Accordion 1.0",
+            "H5P.Agamotto 1.6",
+            "H5P.Audio 1.5",
+            "H5P.Dialogcards 1.9",
+            "H5P.ImageMultipleHotspotQuestion 1.0",
+            "H5P.Image 1.1",
+            "H5P.ImageHotspots 1.10",
+            "H5P.ImageSlider 1.1",
+            "H5P.InteractiveVideo 1.26",
+            "H5P.Timeline 1.1"
+          ]
+        }
       ]
     }
   },
